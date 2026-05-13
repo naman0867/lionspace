@@ -4,15 +4,24 @@ import Dashboard from "../pages/Dashboard"
 import Tasks from "../pages/Tasks"
 import Messages from "../pages/Messages"
 import Analytics from "../pages/Analytics"
+import Login from "../pages/Login"
 
 const AppRoutes = () => {
   return (
     <Routes>
+
       {/* DEFAULT */}
 
       <Route
         path="/"
         element={<Navigate to="/dashboard" />}
+      />
+
+      {/* LOGIN */}
+
+      <Route
+        path="/login"
+        element={<Login />}
       />
 
       {/* PAGES */}
@@ -36,6 +45,7 @@ const AppRoutes = () => {
         path="/analytics"
         element={<Analytics />}
       />
+
     </Routes>
   )
 }

@@ -1,6 +1,14 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+
+    navigate("/login")
+  }
+
   const menuItems = [
     {
       title: "Dashboard",
@@ -22,11 +30,7 @@ const Sidebar = () => {
 
   return (
     <aside className="fixed top-0 left-0 w-[280px] h-screen bg-black text-white flex flex-col justify-between shadow-2xl z-[9999]">
-      {/* TOP */}
-
       <div>
-        {/* LOGO */}
-
         <div className="px-7 py-8 border-b border-zinc-800">
           <h1 className="text-5xl font-black tracking-tight">
             LionSpace
@@ -36,8 +40,6 @@ const Sidebar = () => {
             AI Productivity Workspace
           </p>
         </div>
-
-        {/* NAVIGATION */}
 
         <nav className="flex flex-col gap-3 p-5 mt-4">
           {menuItems.map((item) => (
@@ -58,10 +60,11 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* BOTTOM */}
-
       <div className="p-5 border-t border-zinc-800">
-        <button className="w-full bg-red-500 hover:bg-red-600 transition-all duration-200 text-white text-2xl font-bold py-5 rounded-2xl">
+        <button
+          onClick={handleLogout}
+          className="w-full bg-red-500 hover:bg-red-600 transition-all duration-200 text-white text-2xl font-bold py-5 rounded-2xl"
+        >
           Logout
         </button>
       </div>
