@@ -1,41 +1,40 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 
-import Login from "../pages/Login"
-import Register from "../pages/Register"
 import Dashboard from "../pages/Dashboard"
+import Tasks from "../pages/Tasks"
+import Messages from "../pages/Messages"
 import Analytics from "../pages/Analytics"
 
-function AppRoutes() {
-  const token = localStorage.getItem("token")
-
+const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route
-        path="/login"
-        element={!token ? <Login /> : <Navigate to="/" />}
-      />
+      {/* DEFAULT */}
 
-      <Route
-        path="/register"
-        element={!token ? <Register /> : <Navigate to="/" />}
-      />
-
-      {/* Protected Routes */}
       <Route
         path="/"
-        element={token ? <Dashboard /> : <Navigate to="/login" />}
+        element={<Navigate to="/dashboard" />}
+      />
+
+      {/* PAGES */}
+
+      <Route
+        path="/dashboard"
+        element={<Dashboard />}
+      />
+
+      <Route
+        path="/tasks"
+        element={<Tasks />}
+      />
+
+      <Route
+        path="/messages"
+        element={<Messages />}
       />
 
       <Route
         path="/analytics"
-        element={token ? <Analytics /> : <Navigate to="/login" />}
-      />
-
-      {/* Fallback */}
-      <Route
-        path="*"
-        element={<Navigate to={token ? "/" : "/login"} />}
+        element={<Analytics />}
       />
     </Routes>
   )

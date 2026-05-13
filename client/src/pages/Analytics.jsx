@@ -1,127 +1,151 @@
+import Sidebar from "../components/Sidebar"
+
 import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
   PieChart,
   Pie,
   Cell,
-  Tooltip,
-  ResponsiveContainer,
+  Legend,
 } from "recharts"
 
-const Analytics = ({ tasks }) => {
-  // COUNTS
-  const completedTasks = tasks.filter(
-    (task) => task.status === "completed"
-  ).length
+const Analytics = () => {
+  const productivityData = [
+    { day: "Mon", productivity: 30 },
+    { day: "Tue", productivity: 45 },
+    { day: "Wed", productivity: 60 },
+    { day: "Thu", productivity: 77 },
+    { day: "Fri", productivity: 33 },
+  ]
 
-  const todoTasks = tasks.filter(
-    (task) => task.status === "todo"
-  ).length
-
-  const progressTasks = tasks.filter(
-    (task) => task.status === "progress"
-  ).length
-
-  const pendingTasks =
-    todoTasks + progressTasks
-
-  const productivity =
-    tasks.length > 0
-      ? Math.round(
-          (completedTasks / tasks.length) * 100
-        )
-      : 0
-
-  // CHART DATA
-  const data = [
-    {
-      name: "Todo",
-      value: todoTasks,
-      color: "#3B82F6",
-    },
-
-    {
-      name: "In Progress",
-      value: progressTasks,
-      color: "#FACC15",
-    },
-
+  const taskData = [
     {
       name: "Completed",
-      value: completedTasks,
-      color: "#22C55E",
+      value: 1,
+      color: "#22c55e",
+    },
+    {
+      name: "In Progress",
+      value: 1,
+      color: "#eab308",
+    },
+    {
+      name: "Todo",
+      value: 1,
+      color: "#9ca3af",
     },
   ]
 
   return (
-    <div>
-      {/* HEADING */}
-      <h1 className="text-4xl font-bold mb-10">
-        Analytics Dashboard
-      </h1>
+    <div className="flex bg-[#f4f4f5] min-h-screen">
+      {/* SIDEBAR */}
 
-      {/* STATS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
-        <div className="bg-white rounded-2xl shadow-md p-7">
-          <p className="text-gray-500 text-lg">
-            Total Tasks
-          </p>
+      <Sidebar />
 
-          <h2 className="text-5xl font-bold mt-3">
-            {tasks.length}
-          </h2>
+      {/* MAIN CONTENT */}
+
+      <main className="ml-[280px] flex-1 p-10 overflow-x-hidden">
+        <h1 className="text-7xl font-black text-black">
+          Advanced Analytics
+        </h1>
+
+        <p className="text-gray-500 text-2xl mt-2 mb-10">
+          AI-powered productivity insights
+        </p>
+
+        {/* STATS */}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-10">
+          <div className="bg-white rounded-3xl shadow-md p-8">
+            <h2 className="text-gray-500 text-2xl">
+              Productivity
+            </h2>
+
+            <p className="text-7xl font-black text-blue-500 mt-4">
+              33%
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-md p-8">
+            <h2 className="text-gray-500 text-2xl">
+              Completed
+            </h2>
+
+            <p className="text-7xl font-black text-green-500 mt-4">
+              1
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-md p-8">
+            <h2 className="text-gray-500 text-2xl">
+              Pending
+            </h2>
+
+            <p className="text-7xl font-black text-yellow-500 mt-4">
+              2
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-md p-8">
+            <h2 className="text-gray-500 text-2xl">
+              AI Efficiency
+            </h2>
+
+            <p className="text-7xl font-black text-purple-500 mt-4">
+              94%
+            </p>
+          </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-md p-7">
-          <p className="text-gray-500 text-lg">
-            Completed
-          </p>
+        {/* CHARTS */}
 
-          <h2 className="text-5xl font-bold mt-3 text-green-500">
-            {completedTasks}
-          </h2>
-        </div>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          {/* LINE CHART */}
 
-        <div className="bg-white rounded-2xl shadow-md p-7">
-          <p className="text-gray-500 text-lg">
-            Pending
-          </p>
+          <div className="bg-white rounded-3xl shadow-md p-8 h-[550px]">
+            <h2 className="text-5xl font-black mb-10">
+              Productivity Trend
+            </h2>
 
-          <h2 className="text-5xl font-bold mt-3 text-yellow-500">
-            {pendingTasks}
-          </h2>
-        </div>
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={productivityData}>
+                <XAxis dataKey="day" />
 
-        <div className="bg-white rounded-2xl shadow-md p-7">
-          <p className="text-gray-500 text-lg">
-            Productivity
-          </p>
+                <YAxis />
 
-          <h2 className="text-5xl font-bold mt-3 text-blue-500">
-            {productivity}%
-          </h2>
-        </div>
-      </div>
+                <Tooltip />
 
-      {/* CHARTS + ACTIVITY */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        {/* PIE CHART */}
-        <div className="bg-white rounded-2xl shadow-md p-8">
-          <h2 className="text-3xl font-bold mb-8">
-            Task Distribution
-          </h2>
+                <Line
+                  type="monotone"
+                  dataKey="productivity"
+                  stroke="#8b5cf6"
+                  strokeWidth={5}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
 
-          <div className="h-[400px]">
-            <ResponsiveContainer
-              width="100%"
-              height="100%"
-            >
+          {/* PIE CHART */}
+
+          <div className="bg-white rounded-3xl shadow-md p-8 h-[550px]">
+            <h2 className="text-5xl font-black mb-10">
+              Task Distribution
+            </h2>
+
+            <ResponsiveContainer width="100%" height="80%">
               <PieChart>
                 <Pie
-                  data={data}
+                  data={taskData}
                   dataKey="value"
+                  nameKey="name"
                   outerRadius={140}
                   label
                 >
-                  {data.map((entry, index) => (
+                  {taskData.map((entry, index) => (
                     <Cell
                       key={index}
                       fill={entry.color}
@@ -130,52 +154,13 @@ const Analytics = ({ tasks }) => {
                 </Pie>
 
                 <Tooltip />
+
+                <Legend />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
-
-        {/* RECENT TASKS */}
-        <div className="bg-white rounded-2xl shadow-md p-8">
-          <h2 className="text-3xl font-bold mb-8">
-            Recent Activity
-          </h2>
-
-          <div className="flex flex-col gap-5">
-            {tasks
-              .slice()
-              .reverse()
-              .map((task) => (
-                <div
-                  key={task.id}
-                  className="border border-gray-200 rounded-2xl p-5"
-                >
-                  <h3 className="text-2xl font-semibold mb-2">
-                    {task.title}
-                  </h3>
-
-                  <p className="text-gray-600 mb-4">
-                    {task.description}
-                  </p>
-
-                  <span
-                    className={`px-4 py-2 rounded-full text-sm font-semibold
-                    ${
-                      task.status === "todo"
-                        ? "bg-gray-200 text-gray-700"
-                        : task.status ===
-                          "progress"
-                        ? "bg-yellow-200 text-yellow-700"
-                        : "bg-green-200 text-green-700"
-                    }`}
-                  >
-                    {task.status}
-                  </span>
-                </div>
-              ))}
-          </div>
-        </div>
-      </div>
+      </main>
     </div>
   )
 }
