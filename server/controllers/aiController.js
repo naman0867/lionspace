@@ -1,10 +1,19 @@
-import axios from "axios"
+import OpenAI from "openai"
+import dotenv from "dotenv"
+
+dotenv.config()
+
+const client = new OpenAI({
+  apiKey: process.env.XAI_API_KEY,
+  baseURL: "https://api.x.ai/v1",
+})
 
 export const generateTasks = async (req, res) => {
   try {
     const { prompt } = req.body
 
-    // Validate Prompt
+    console.log("Incoming Prompt:", prompt)
+
     if (!prompt || prompt.trim() === "") {
       return res.status(400).json({
         success: false,
@@ -12,64 +21,51 @@ export const generateTasks = async (req, res) => {
       })
     }
 
-    console.log("Generating AI Tasks...")
+    console.log("Calling Grok AI...")
 
-    // OpenRouter API Request
-    const response = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
+    const completion = await client.chat.completions.create({
+      model: "grok-3-mini",
 
-      {
-        model: "meta-llama/llama-3-8b-instruct:free",
-
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are an AI productivity assistant that generates short software development tasks in bullet points.",
-          },
-
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-
-        temperature: 0.7,
-        max_tokens: 200,
-      },
-
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-
-          "Content-Type": "application/json",
-
-          "HTTP-Referer": "http://localhost:5173",
-
-          "X-Title": "LionSpace",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an AI productivity assistant that generates short software development tasks in bullet points.",
         },
-      }
-    )
 
-    console.log("AI Response Success")
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
 
-    const result = response.data.choices[0].message.content
+      temperature: 0.7,
+      max_tokens: 200,
+    })
 
-    // Send Response
+    console.log("Grok AI Success")
+
+    const result = completion.choices[0].message.content
+
     res.status(200).json({
       success: true,
       tasks: result,
     })
   } catch (error) {
-    console.log("========== AI ERROR ==========")
+    console.log("========== GROK ERROR ==========")
 
-    console.log(error.response?.data || error.message)
+    console.log(error.message)
+
+    if (error.response) {
+      console.log(error.response.data)
+    }
 
     console.log("================================")
 
     res.status(500).json({
       success: false,
       message: "AI generation failed",
+      error: error.message,
     })
   }
 }
