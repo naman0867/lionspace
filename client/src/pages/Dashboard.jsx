@@ -1,4 +1,5 @@
 import { useState } from "react"
+
 import Sidebar from "../components/Sidebar"
 
 import {
@@ -31,13 +32,15 @@ const Dashboard = () => {
     {
       id: 3,
       title: "MongoDB Integration",
-      description: "Connect database and test models",
+      description:
+        "Connect database and test models",
       status: "todo",
     },
   ])
 
   const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
+  const [description, setDescription] =
+    useState("")
 
   const productivityData = [
     { day: "Mon", productivity: 30 },
@@ -47,10 +50,14 @@ const Dashboard = () => {
     { day: "Fri", productivity: 33 },
   ]
 
-  const todoCount = tasks.filter((t) => t.status === "todo").length
+  const todoCount = tasks.filter(
+    (t) => t.status === "todo"
+  ).length
+
   const progressCount = tasks.filter(
     (t) => t.status === "inprogress"
   ).length
+
   const completedCount = tasks.filter(
     (t) => t.status === "completed"
   ).length
@@ -90,13 +97,17 @@ const Dashboard = () => {
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+    setTasks(
+      tasks.filter((task) => task.id !== id)
+    )
   }
 
   const moveTask = (id, status) => {
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, status } : task
+        task.id === id
+          ? { ...task, status }
+          : task
       )
     )
   }
@@ -113,15 +124,17 @@ const Dashboard = () => {
             {task.title}
           </h3>
 
-          <p className="text-gray-600 mt-3 text-lg">
+          <p className="text-gray-600 mt-3">
             {task.description}
           </p>
 
           <div className="flex flex-wrap gap-2 mt-5">
             {status !== "todo" && (
               <button
-                onClick={() => moveTask(task.id, "todo")}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl transition"
+                onClick={() =>
+                  moveTask(task.id, "todo")
+                }
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl"
               >
                 Todo
               </button>
@@ -130,9 +143,12 @@ const Dashboard = () => {
             {status !== "inprogress" && (
               <button
                 onClick={() =>
-                  moveTask(task.id, "inprogress")
+                  moveTask(
+                    task.id,
+                    "inprogress"
+                  )
                 }
-                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl transition"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl"
               >
                 In Progress
               </button>
@@ -141,17 +157,22 @@ const Dashboard = () => {
             {status !== "completed" && (
               <button
                 onClick={() =>
-                  moveTask(task.id, "completed")
+                  moveTask(
+                    task.id,
+                    "completed"
+                  )
                 }
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition"
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
               >
                 Complete
               </button>
             )}
 
             <button
-              onClick={() => deleteTask(task.id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition"
+              onClick={() =>
+                deleteTask(task.id)
+              }
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
             >
               Delete
             </button>
@@ -164,12 +185,14 @@ const Dashboard = () => {
     <>
       <Sidebar />
 
-      <div className="ml-[280px] min-h-screen bg-[#f4f4f5] p-10 overflow-y-auto">
-        <h1 className="text-6xl font-black text-black mb-10">
-          AI Productivity Dashboard
+      <div className="ml-[280px] w-[calc(100%-280px)] min-h-screen bg-[#f4f4f5] p-10 overflow-x-hidden">
+        {/* HEADER */}
+
+        <h1 className="text-5xl xl:text-6xl font-black text-black mb-10 break-words">
+          AI Productivity Dashboard 🚀
         </h1>
 
-        {/* TOP STATS */}
+        {/* STATS */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-10">
           <div className="bg-white rounded-3xl shadow-md p-8">
@@ -213,18 +236,25 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* ANALYTICS */}
+        {/* CHARTS */}
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-10">
-          <div className="bg-white rounded-3xl shadow-md p-8 h-[520px]">
-            <h2 className="text-5xl font-black mb-8">
+          <div className="bg-white rounded-3xl shadow-md p-8 h-[500px]">
+            <h2 className="text-4xl font-black mb-8">
               Productivity Trend
             </h2>
 
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart data={productivityData}>
+            <ResponsiveContainer
+              width="100%"
+              height="80%"
+            >
+              <LineChart
+                data={productivityData}
+              >
                 <XAxis dataKey="day" />
+
                 <YAxis />
+
                 <Tooltip />
 
                 <Line
@@ -237,12 +267,15 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-md p-8 h-[520px]">
-            <h2 className="text-5xl font-black mb-8">
+          <div className="bg-white rounded-3xl shadow-md p-8 h-[500px]">
+            <h2 className="text-4xl font-black mb-8">
               Task Distribution
             </h2>
 
-            <ResponsiveContainer width="100%" height="80%">
+            <ResponsiveContainer
+              width="100%"
+              height="80%"
+            >
               <PieChart>
                 <Pie
                   data={analyticsData}
@@ -251,12 +284,14 @@ const Dashboard = () => {
                   outerRadius={140}
                   label
                 >
-                  {analyticsData.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={entry.color}
-                    />
-                  ))}
+                  {analyticsData.map(
+                    (entry, index) => (
+                      <Cell
+                        key={index}
+                        fill={entry.color}
+                      />
+                    )
+                  )}
                 </Pie>
 
                 <Tooltip />
@@ -270,7 +305,7 @@ const Dashboard = () => {
         {/* CREATE TASK */}
 
         <div className="bg-white rounded-3xl shadow-md p-8 mb-10">
-          <h2 className="text-5xl font-black mb-8">
+          <h2 className="text-4xl font-black mb-8">
             Create Task
           </h2>
 
@@ -279,8 +314,10 @@ const Dashboard = () => {
               type="text"
               placeholder="Task Title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-5 rounded-2xl border border-gray-300 text-xl outline-none"
+              onChange={(e) =>
+                setTitle(e.target.value)
+              }
+              className="w-full p-5 rounded-2xl border border-gray-300 outline-none"
             />
 
             <textarea
@@ -288,9 +325,11 @@ const Dashboard = () => {
               placeholder="Task Description"
               value={description}
               onChange={(e) =>
-                setDescription(e.target.value)
+                setDescription(
+                  e.target.value
+                )
               }
-              className="w-full p-5 rounded-2xl border border-gray-300 text-xl outline-none"
+              className="w-full p-5 rounded-2xl border border-gray-300 outline-none"
             />
 
             <button
@@ -302,11 +341,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* KANBAN */}
+        {/* TASK BOARD */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="bg-white rounded-3xl shadow-md p-8 min-h-[500px]">
-            <h2 className="text-5xl font-black mb-8 text-gray-700">
+            <h2 className="text-4xl font-black mb-8 text-gray-700">
               Todo
             </h2>
 
@@ -314,7 +353,7 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white rounded-3xl shadow-md p-8 min-h-[500px]">
-            <h2 className="text-5xl font-black mb-8 text-yellow-500">
+            <h2 className="text-4xl font-black mb-8 text-yellow-500">
               In Progress
             </h2>
 
@@ -322,7 +361,7 @@ const Dashboard = () => {
           </div>
 
           <div className="bg-white rounded-3xl shadow-md p-8 min-h-[500px]">
-            <h2 className="text-5xl font-black mb-8 text-green-500">
+            <h2 className="text-4xl font-black mb-8 text-green-500">
               Completed
             </h2>
 

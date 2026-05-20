@@ -1,60 +1,45 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
+import express from "express"
+import cors from "cors"
+import dotenv from "dotenv"
+import mongoose from "mongoose"
 
-import authRoutes from "./routes/authRoutes.js";
-import taskRoutes from "./routes/taskRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
+const app = express()
 
-// ======================
-// MIDDLEWARE
-// ======================
+// ================= MIDDLEWARE =================
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+app.use(cors())
 
-app.use(express.json());
+app.use(express.json())
 
-// ======================
-// ROUTES
-// ======================
+// ================= ROUTES =================
 
-app.use("/api/auth", authRoutes);
-app.use("/api/tasks", taskRoutes);
-app.use("/api/ai", aiRoutes);
+app.use("/api/auth", authRoutes)
 
-// ======================
-// TEST ROUTE
-// ======================
+// ================= TEST ROUTE =================
 
 app.get("/", (req, res) => {
-  res.send("LionSpace API Running");
-});
+  res.send("LionSpace API Running")
+})
 
-// ======================
-// DATABASE CONNECTION
-// ======================
+// ================= DATABASE =================
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("MongoDB Connected");
+    console.log("MongoDB Connected")
   })
   .catch((err) => {
-    console.log("MongoDB Error:", err.message);
-  });
+    console.log(err)
+  })
 
-// ======================
-// EXPORT APP FOR VERCEL
-// ======================
+// ================= SERVER =================
 
-export default app;
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`)
+})

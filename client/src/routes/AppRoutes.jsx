@@ -1,30 +1,21 @@
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 
+import Login from "../pages/Login"
+import Register from "../pages/Register"
 import Dashboard from "../pages/Dashboard"
 import Tasks from "../pages/Tasks"
 import Messages from "../pages/Messages"
 import Analytics from "../pages/Analytics"
-import Login from "../pages/Login"
 
 const AppRoutes = () => {
   return (
     <Routes>
-
-      {/* DEFAULT */}
-
-      <Route
-        path="/"
-        element={<Navigate to="/dashboard" />}
-      />
-
-      {/* LOGIN */}
+      <Route path="/" element={<Login />} />
 
       <Route
-        path="/login"
-        element={<Login />}
+        path="/register"
+        element={<Register />}
       />
-
-      {/* PAGES */}
 
       <Route
         path="/dashboard"
@@ -45,7 +36,6 @@ const AppRoutes = () => {
         path="/analytics"
         element={<Analytics />}
       />
-
     </Routes>
   )
 }

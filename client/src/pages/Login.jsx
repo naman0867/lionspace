@@ -69,6 +69,16 @@ const Login = () => {
         <button className="w-full bg-black text-white py-3 rounded">
           Login
         </button>
+
+        <p className="text-center mt-4 text-gray-600">
+          Don't have an account?{" "}
+          <span
+            className="text-blue-500 cursor-pointer font-semibold"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </span>
+        </p>
       </form>
     </div>
   )

@@ -1,4 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom"
+import {
+  NavLink,
+  useNavigate,
+} from "react-router-dom"
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -6,7 +9,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token")
 
-    navigate("/login")
+    navigate("/")
   }
 
   const menuItems = [
